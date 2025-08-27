@@ -50,3 +50,4 @@ create table Medicos(
 	FechaCreacion datetime not null,
 	FechaModificacion datetime
 )
+--Este es un comentario de prueba
