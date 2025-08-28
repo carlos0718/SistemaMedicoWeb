@@ -39,10 +39,10 @@ Según el esquema de entidades comentado en el archivo SQL, faltan las siguiente
 
 -   [ ] **Medicos** - Corregir nombre de tabla (debería ser singular: "Medico")
 
-    -   Agregar campos: Matricula, Telefono, Email
+    -   Agregar campos: Matricula
 
 -   [ ] **Paciente** - Considerar campos adicionales
-    -   Sugerencias: NumeroAfiliado, Telefono, Email, ContactoEmergencia
+    -   Sugerencias: NumeroAfiliado, ContactoEmergencia
 
 ### 🎯 Próximos Pasos
 
@@ -59,4 +59,4 @@ Según el esquema de entidades comentado en el archivo SQL, faltan las siguiente
 ---
 
 **Estado del Proyecto**: En desarrollo
-**Última actualización**: 27 de agosto de 2025
+**Última actualización**: 28 de agosto de 2025
