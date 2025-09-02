@@ -2,90 +2,105 @@
 /*### Esquema de Entidades
 - **Persona** - Tabla Base
 - **Paciente** - Datos de pacientes (hereda de Persona)
-- **Medico** - Datos de médicos (hereda de Persona)
+- **Medico** - Datos de mÃ©dicos (hereda de Persona)
 - **Usuario** - Usuarios del sistema
 - **TipoUsuario** - Tipos de usuarios del sistema
 - **ObraSocial** - Obras sociales disponibles
-- **Especialidad** - Especialidades médicas
-- **OrdenMedica** - Órdenes médicas
-- **LineaOrdenMedica** - Líneas de tratamiento de órdenes médicas
+- **Especialidad** - Especialidades mÃ©dicas
+- **OrdenMedica** - Ã“rdenes mÃ©dicas
+- **LineaOrdenMedica** - LÃ­neas de tratamiento de Ã³rdenes mÃ©dicas
 */
 
+--use SistemaMedicoMartin
+
 create table Persona (
-	Id int primary key identity(1,1),
+	Id int primary key identity(1,1) not null,
 	Nombre varchar(15) not null,
 	Apellido varchar(30) not null,
-	DNI varchar(12) not null,
-)
+	FechaNacimiento datetime not null,
+	Genero varchar(15) not null,
+	DNI varchar(12) unique not null,
+	Domicilio varchar(150),
+	Telefono varchar(20),
+	Email varchar(100),
+
+);
 
 
-create table Obrasocial(
-	Id int primary key identity(1,1),
-	Nombre varchar(50) not null,
-	Activo bit not null default 1
-)
+CREATE TABLE ObraSocial (
+    Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    Nombre NVARCHAR(100) NOT NULL UNIQUE,
+    Codigo NVARCHAR(10) NOT NULL UNIQUE,
+    Descripcion NVARCHAR(255) NULL,
+    Activo BIT NOT NULL DEFAULT 1,
+    FechaCreacion DATETIME2(7) NOT NULL DEFAULT GETDATE(),
+    FechaModificacion DATETIME2(7) NULL
+);
 
 create table Paciente(
 	Id int primary key identity(1,1) not null,
 	PersonaId int not null Foreign key references Persona(Id),
-	Activo bit not null default 1,
 	ObrasocialId int not null  Foreign key references Obrasocial(Id),
+	NumeroAfiliado varchar(30) not null,
 	FechaCreacion datetime not null,
-	FechaModificacion datetime
+	FechaModificacion datetime,
+	Activo bit not null default 1
 
 	--Constraint FK_Paciente_Persona Foreign key (PersonaId) references Persona(Id),
-)
+);
 
 create table Especialidad(
 	Id int primary key identity(1,1) not null,
 	Descripcion varchar(100) not null,
 	Activo bit not null default 1,
-)
+);
 
 create table Medico(
-	Id int identity(1,1) not null,
+	Id int identity(1,1) primary key not null,
 	PersonaId int not null Foreign key references Persona(Id),
 	EspecialidadId int not null Foreign key references Especialidad(Id),
-	Activo bit not null default 1,
+	Matricula varchar(20) not null,
 	FechaCreacion datetime not null,
+	Activo bit not null default 1,
 	FechaModificacion datetime
-	Matricula varchar(100) not null,
-	Telefono int not null
-	Email varchar(100) not null,
-)
---Este es un comentario de prueba 2
+);
 
-create table Usuario(
-    Id int primary Key identity(1,1) not null,
-	Username varchar(100) not null,
-	Password varchar(100) not null,
-	Email varchar (100) not null,
-	Personald varchar(100) not null Foreign key references Persona(Id),
-	TipoUsuario int Foreign key references TipoUsuario(Id),
-	Activo bit not null default 1,
-	FechaCreacion datetime not null,
-	FechaModificacion datetime
-)
-create table TipoUsuario(
-    Id int primary Key identity(1,1) not null,
-	Descripcion int not null,
-	Activo bit not null default 1,
-)
-create table OrdenMedica(
-	Id int primary Key identity(1,1) not null,
-	Medicold int Foreign Key references Medicos(Id),
-	Pacienteld int Forgein Key references Paciente(Id),
-	Diagnostico varchar(100) not null,
-	Observaciones varchar(100) not null,
-	Estado varcahar(100) not null,
-	FechaCreacion datetime not null,
-)
-create table LineaOrdenMedica(
-	Id int primary Key identity(1,1) not null,
-	OrdenMedicald int Forgein Key references OrdenMedica(Id),
-	Medicamento varchar(100) not null,
-	Dosis int not null,
-	Frecuencia varchar(100) not null,
-	Duracion varchar(100) not null,
-	Instrucciones varchar(100) not null,
+CREATE TABLE TipoUsuario (
+    Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    Nombre NVARCHAR(50) NOT NULL UNIQUE,
+    Descripcion NVARCHAR(255) NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE Usuario (
+    UsuarioId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    NombreUsuario NVARCHAR(50) NOT NULL UNIQUE,
+    Contrasena NVARCHAR(255) NOT NULL,
+    TipoUsuarioId INT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(Id),
+    Activo BIT NOT NULL DEFAULT 1,
+    FechaCreacion DATETIME2(7) NOT NULL DEFAULT GETDATE(),
+	FechaModificacion datetime,
+    UltimoAcceso DATETIME2(7) NULL
+);
+
+CREATE TABLE OrdenMedica (
+    OrdenMedicaId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    PacienteId INT NOT NULL FOREIGN KEY REFERENCES Paciente(Id),
+    MedicoId INT NOT NULL FOREIGN KEY REFERENCES Medico(Id),
+    Fecha DATETIME2(7) NOT NULL DEFAULT GETDATE() CHECK (Fecha <= GETDATE()),
+    ObraSocialId INT NULL FOREIGN KEY REFERENCES ObraSocial(Id),
+    EntregadaAlPaciente BIT NOT NULL DEFAULT 0,
+    Observaciones NVARCHAR(1000) NULL
+);
+
+CREATE TABLE LineaOrdenMedica (
+    LineaOrdenMedicaId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    OrdenMedicaId INT NOT NULL FOREIGN KEY REFERENCES OrdenMedica(OrdenMedicaId) ON DELETE CASCADE,
+    Cantidad INT NOT NULL CHECK (Cantidad > 0),
+    NumeroRegistro NVARCHAR(20) NOT NULL,
+    Nombre NVARCHAR(200) NOT NULL,
+    FrecuenciaHoras INT NULL CHECK (FrecuenciaHoras > 0),
+    UnicaAplicacion BIT NOT NULL DEFAULT 0,
+    Observacion NVARCHAR(500) NULL,
+    TratamientoEmpezado BIT NOT NULL DEFAULT 0
 )
