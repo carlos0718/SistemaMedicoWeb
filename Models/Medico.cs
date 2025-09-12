@@ -15,6 +15,7 @@ namespace WebAppSistemaMedico.Models
             public string? Matricula { get; set; }
             public string? Telefono { get; set; }
             public string? Email { get; set; }
-        
+            virtual public Persona? Persona { get; set; }
+            virtual public Especialidad? Especialidad { get; set; }
     }
 }

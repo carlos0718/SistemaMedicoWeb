@@ -77,6 +77,7 @@ CREATE TABLE Usuario (
     NombreUsuario NVARCHAR(50) NOT NULL UNIQUE,
     Contrasena NVARCHAR(255) NOT NULL,
     TipoUsuarioId INT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(Id),
+    PersonaId INT NOT NULL FOREIGN KEY REFERENCES Persona(Id),
     Activo BIT NOT NULL DEFAULT 1,
     FechaCreacion DATETIME2(7) NOT NULL DEFAULT GETDATE(),
 	FechaModificacion datetime,
@@ -102,5 +103,6 @@ CREATE TABLE LineaOrdenMedica (
     FrecuenciaHoras INT NULL CHECK (FrecuenciaHoras > 0),
     UnicaAplicacion BIT NOT NULL DEFAULT 0,
     Observacion NVARCHAR(500) NULL,
-    TratamientoEmpezado BIT NOT NULL DEFAULT 0
+    TratamientoEmpezado BIT NOT NULL DEFAULT 0,
+    Duracion int not null     
 )

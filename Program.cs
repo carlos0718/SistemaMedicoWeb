@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using WebAppSistemaMedico.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<WebAppSistemaMedicoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WebAppSistemaMedicoContext") ?? throw new InvalidOperationException("Connection string 'WebAppSistemaMedicoContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -12,7 +12,9 @@ namespace WebAppSistemaMedico.Models
             public int ObraSocialId { get; set; }
             public DateTime? FechaCreacion { get; set; }
             public DateTime? FechaModificacion { get; set; }
+            virtual public Persona? Persona { get; set; }
+            virtual public ObraSocial? ObraSocial { get; set; }
 
-        }
+
     }
-}
+};
