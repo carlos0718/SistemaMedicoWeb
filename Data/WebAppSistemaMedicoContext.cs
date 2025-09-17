@@ -14,8 +14,8 @@ namespace WebAppSistemaMedico.Data
         {
         }
 
-        public DbSet<WebAppSistemaMedico.Models.Persona> Persona { get; set; } = default!;
-        public DbSet<WebAppSistemaMedico.Models.Especialidad> Especialidad { get; set; } = default!;
+        public DbSet<Persona> Persona { get; set; } = default!;
+        public DbSet<Especialidad> Especialidad { get; set; } = default!;
         public DbSet<WebAppSistemaMedico.Models.LineaOrdenMedica> LineaOrdenMedica { get; set; } = default!;
         public DbSet<WebAppSistemaMedico.Models.Medico> Medico { get; set; } = default!;
         public DbSet<WebAppSistemaMedico.Models.ObraSocial> ObraSocial { get; set; } = default!;

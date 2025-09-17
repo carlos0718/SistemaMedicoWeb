@@ -14,32 +14,25 @@ namespace WebAppSistemaMedico.Controllers
     [ApiController]
     public class ObraSocialsController : ControllerBase
     {
-        private readonly WebAppSistemaMedicoContext _context;
+        
 
         public ObraSocialsController(WebAppSistemaMedicoContext context)
         {
-            _context = context;
+            
         }
 
         // GET: api/ObraSocials
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ObraSocial>>> GetObraSocial()
         {
-            return await _context.ObraSocial.ToListAsync();
+            
         }
 
         // GET: api/ObraSocials/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ObraSocial>> GetObraSocial(int id)
         {
-            var obraSocial = await _context.ObraSocial.FindAsync(id);
-
-            if (obraSocial == null)
-            {
-                return NotFound();
-            }
-
-            return obraSocial;
+            
         }
 
         // PUT: api/ObraSocials/5
@@ -47,30 +40,7 @@ namespace WebAppSistemaMedico.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutObraSocial(int id, ObraSocial obraSocial)
         {
-            if (id != obraSocial.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(obraSocial).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ObraSocialExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            
         }
 
         // POST: api/ObraSocials
@@ -78,31 +48,19 @@ namespace WebAppSistemaMedico.Controllers
         [HttpPost]
         public async Task<ActionResult<ObraSocial>> PostObraSocial(ObraSocial obraSocial)
         {
-            _context.ObraSocial.Add(obraSocial);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetObraSocial", new { id = obraSocial.Id }, obraSocial);
+            
         }
 
         // DELETE: api/ObraSocials/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteObraSocial(int id)
         {
-            var obraSocial = await _context.ObraSocial.FindAsync(id);
-            if (obraSocial == null)
-            {
-                return NotFound();
-            }
-
-            _context.ObraSocial.Remove(obraSocial);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            
         }
 
         private bool ObraSocialExists(int id)
         {
-            return _context.ObraSocial.Any(e => e.Id == id);
+            
         }
     }
 }
