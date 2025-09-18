@@ -12,21 +12,23 @@ namespace WebAppSistemaMedico.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EspecialidadsController : ControllerBase
+    public class EspecialidadesController : ControllerBase
     {
         //1.- Inyectar el contexto de la base de datos como una variable privada
+        private readonly WebAppSistemaMedicoContext _context;
 
-        public EspecialidadsController(WebAppSistemaMedicoContext context)
+        public EspecialidadesController(WebAppSistemaMedicoContext context)
         {
             //2.- Asignar el contexto a una variable privada
+            _context = context;
         }
-
+            
         //3.- Implementar los métodos CRUD (Create, Read, Update, Delete) para la entidad Especialidad
         // GET: api/Especialidads
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Especialidad>>> GetEspecialidad()
         {
-           
+           return await _context.Especialidad.ToListAsync();
         }
 
         // GET: api/Especialidads/5
