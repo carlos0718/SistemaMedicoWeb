@@ -12,7 +12,8 @@ namespace WebAppSistemaMedico.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ObraSocialsController : ControllerBase
+    public class ObraSocialsController
+        : ControllerBase
     {
         private readonly WebAppSistemaMedicoContext _context;
 
@@ -46,14 +47,14 @@ namespace WebAppSistemaMedico.Controllers
         // PUT: api/ObraSocials/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutObraSocials(int id, ObraSocials obraSocial)
+        public async Task<IActionResult> PutObraSocial(int id, ObraSocial obraSocial)
         {
             if (id != obraSocial.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(ObraSocials).State = EntityState.Modified;
+            _context.Entry(obraSocial).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +62,7 @@ namespace WebAppSistemaMedico.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ObraSocialsExists(id))
+                if (!ObraSocialExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +74,38 @@ namespace WebAppSistemaMedico.Controllers
 
             return NoContent();
         }
-    }
+
 
         // POST: api/ObraSocials
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<ObraSocial>> PostObraSocial(ObraSocial obraSocial)
         {
-        _context.ObraSocial.Add(obraSocial);
-        await _context.SaveChangesAsync();
+            _context.ObraSocial.Add(obraSocial);
+            await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetObraSocial", new { id = obraSocial.Id }, obraSocial);
-    }
+            return CreatedAtAction("GetObraSocial", new { id = obraSocial.Id }, obraSocial);
+        }
 
         // DELETE: api/ObraSocials/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteObraSocial(int id)
         {
-        var obraSocial = await _context.Obrasocial.FindAsync(id);
-        if (ObraSocial == null)
-        {
-            return NotFound();
-        }
-    }
-    _context.ObraSocial.Remove(ObraSocial);
+            var obraSocial = await _context.ObraSocial.FindAsync(id);
+            if (obraSocial == null)
+            {
+                return NotFound();
+            }
+
+            _context.ObraSocial.Remove(obraSocial);
             await _context.SaveChangesAsync();
 
             return NoContent();
-}
-private bool ObraSocialExists(int id)
-{
-    return _context.ObraSocial.Any(e => e.Id == id);
-}
+        }
+
+        private bool ObraSocialExists(int id)
+        {
+            return _context.ObraSocial.Any(e => e.Id == id);
+        }
     }
 }

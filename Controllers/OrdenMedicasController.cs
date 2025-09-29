@@ -72,38 +72,38 @@ namespace WebAppSistemaMedico.Controllers
 
             return NoContent();
         }
-    }
+
 
         // POST: api/OrdenMedicas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<OrdenMedica>> PostOrdenMedica(OrdenMedica ordenMedica)
         {
-        _context.OrdenMedica.Add(ordenMedica);
-        await _context.SaveChangesAsync();
+            _context.OrdenMedica.Add(ordenMedica);
+            await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetOrdenMedica", new { id = ordenMedica.Id }, ordenMedica);
-    }
+            return CreatedAtAction("GetOrdenMedica", new { id = ordenMedica.Id }, ordenMedica);
+        }
 
         // DELETE: api/OrdenMedicas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrdenMedica(int id)
         {
-        var ordenMedica = await _context.OrdenMedica.FindAsync(id);
-        if (ordenMedica == null)
-        {
-            return NotFound();
+            var ordenMedica = await _context.OrdenMedica.FindAsync(id);
+            if (ordenMedica == null)
+            {
+                return NotFound();
+            }
+
+            _context.OrdenMedica.Remove(ordenMedica);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
-
-        _context.Medico.Remove(ordenMedica);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
 
         private bool OrdenMedicaExists(int id)
         {
-        return _context.OrdenMedica.Any(e => e.Id == id);
-    }
+            return _context.OrdenMedica.Any(e => e.Id == id);
+        }
     }
 }
