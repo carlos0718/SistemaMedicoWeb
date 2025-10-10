@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Iniciar Sesión</h3>
+
+                    <div class="text-danger">
+                        <label>@ViewBag.MensajeError</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nombre Usuario:</label>
+                        <input type="text" id="username" name="nombre" value="" class="form-control" required>
+                        <div class="invalid-feedback">Por favor, ingresa tu nombre de usuario.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" id="password" name="contrasena" value="" class="form-control" required>
+                        <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
