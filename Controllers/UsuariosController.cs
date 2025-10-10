@@ -47,7 +47,7 @@ namespace WebAppSistemaMedico.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
-            if (id != usuario.Id)
+            if (id != usuario.UsuarioId)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace WebAppSistemaMedico.Controllers
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.Id }, usuario);
+            return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioId }, usuario);
         }
 
         // DELETE: api/Usuarios/5
@@ -102,7 +102,7 @@ namespace WebAppSistemaMedico.Controllers
 
         private bool UsuarioExists(int id)
         {
-            return _context.Usuario.Any(e => e.Id == id);
+            return _context.Usuario.Any(e => e.UsuarioId == id);
         }
     }
 }
